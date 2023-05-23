@@ -85,6 +85,12 @@ public class StringGeometricArt {
 				updateTickness();
 			}
 		});	
+		
+		comboBoxShape.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				changeShape();
+			}
+		});
 	}
 
 	/**
@@ -175,11 +181,7 @@ public class StringGeometricArt {
 		panel.add(btnSaveFile);
 		
 		comboBoxShape = new JComboBox<String>();
-		comboBoxShape.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				changeShape();
-			}
-		});
+		
 		comboBoxShape.setBounds(12, 13, 82, 24);
 		panel.add(comboBoxShape);
 		comboBoxShape.addItem("Circle");
@@ -349,6 +351,7 @@ public class StringGeometricArt {
 	}
 	
 	private void changeShape() {
+		art.setShape(comboBoxShape.getSelectedIndex());
 		switch (comboBoxShape.getSelectedIndex()) {
 		case 0: // Circle
 			lblNails.setText("Nails");

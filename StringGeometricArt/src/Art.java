@@ -21,6 +21,7 @@ public class Art {
 	private PVector[] nail;
 	private float tickness;
 	private int[][] set;
+	private int shape;
 	
 	public Art(JLabel lbl, Color backgroundColor, Color foregroundColor, int nails) {
 		this.backgroundColor = backgroundColor;
@@ -36,17 +37,57 @@ public class Art {
 		this.tickness = 1f;
 		this.nail = new PVector[nails];
 		this.set = new int[6][];
+		this.shape = 0; // Circle
 	}
 	
 	private void createCoord() {
-		double incDegree = 2 * Math.PI / this.nails;
-		int center = this.width/2;
-		int radius = center - 10;
-		
-		for (int i=0; i< this.nails; i++) {
-			int x = (int)(center+Math.cos((i*incDegree)+Math.PI)*radius);
-			int y = (int)(center+Math.sin((i*incDegree)+Math.PI)*radius);
-			nail[i] = new PVector(x,y);
+		switch(this.shape) {
+		case 0: // Circle
+			double incDegree = 2 * Math.PI / this.nails;
+			int center = this.width/2;
+			int radius = center - 10;
+			
+			for (int i=0; i< this.nails; i++) {
+				int x = (int)(center+Math.cos((i*incDegree)+Math.PI)*radius);
+				int y = (int)(center+Math.sin((i*incDegree)+Math.PI)*radius);
+				nail[i] = new PVector(x,y);
+			}
+			break;
+		case 1: // Square
+			int nailOnSide = (this.nails + 4) / 4;
+			double step = (this.width-20) / (double)(nailOnSide-1);
+			int index = 0;
+			int x=0;
+			int y=0;
+			for (int i = 0; i< nailOnSide-1; i++) {
+				x = (int)(10 + i * step);
+				y = 10;
+				img.setRGB((int)x, (int)y, Color.BLUE.getRGB());;
+				nail[index] = new PVector(x,y);
+				index++;
+			}
+			for (int i = 0; i< nailOnSide-1; i++) {
+				x = (int)(((nailOnSide-1) * step)+10);
+				y = (int)(10 + i * step);
+				img.setRGB((int)x, (int)y, Color.BLUE.getRGB());;
+				nail[index] = new PVector(x,y);
+				index++;
+			}
+			for (int i = 0; i< nailOnSide-1; i++) {
+				x = (int)((((nailOnSide-1) * step)+20)-(10 + i * step));
+				y = (int)(((nailOnSide-1) * step)+10);
+				img.setRGB((int)x, (int)y, Color.BLUE.getRGB());;
+				nail[index] = new PVector(x,y);
+				index++;
+			}
+			for (int i = 0; i< nailOnSide-1; i++) {
+				x = 10;
+				y = (int)((((nailOnSide-1) * step)+20)-(10 + i * step));
+				img.setRGB((int)x, (int)y, Color.BLUE.getRGB());;
+				nail[index] = new PVector(x,y);
+				index++;
+			}
+			break;
 		}
 	}
 	
@@ -72,9 +113,21 @@ public class Art {
 	}
 	
 	public void setNails(int n) {
-		this.nails = n;
-		nail = new PVector[nails];
+		
+		switch (this.shape) {
+		case 0: // Circle
+			this.nails = n;
+			break;
+		case 1: // Square
+			this.nails = n * 4 - 4;
+			break;
+		default:
+			break;
+		}
+
+		this.nail = new PVector[nails];
 		this.createCoord();
+		
 	}
 	
 	public BufferedImage addString(int set, int a, int b, int c, int d, int r, Color col) {
@@ -111,5 +164,9 @@ public class Art {
 	
 	public int[][] getSet() {
 		return this.set;
+	}
+	
+	public void setShape(int shape) {
+		this.shape = shape;
 	}
 }
