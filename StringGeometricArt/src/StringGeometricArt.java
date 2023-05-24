@@ -23,16 +23,19 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.JSlider;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Arrays;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 
 import javax.swing.border.LineBorder;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 
 public class StringGeometricArt {
 
 	private Color backgroundColor;
 	private Art art;
-	private JFrame frame;
+	private JFrame frmStringArtBy;
 	private JLabel labelColor;
 	private JButton btnBackgroundColor;
 	private JSpinner spinnerNails;
@@ -62,7 +65,7 @@ public class StringGeometricArt {
 			public void run() {
 				try {
 					StringGeometricArt window = new StringGeometricArt();
-					window.frame.setVisible(true);
+					window.frmStringArtBy.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -97,28 +100,29 @@ public class StringGeometricArt {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setResizable(false);
-		frame.setBounds(100, 100, 1310, 890);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmStringArtBy = new JFrame();
+		frmStringArtBy.setTitle("String Art by Deltamike");
+		frmStringArtBy.setResizable(false);
+		frmStringArtBy.setBounds(100, 100, 1310, 890);
+		frmStringArtBy.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		label = new JLabel("");
 		label.setBounds(12, 12, 442, 438);
 		ImageIcon img = new ImageIcon(StringGeometricArt.class.getResource("/images/cerchio.png"));
-		frame.getContentPane().setLayout(null);
+		frmStringArtBy.getContentPane().setLayout(null);
 		label.setIcon(img);
-		frame.getContentPane().add(label);
+		frmStringArtBy.getContentPane().add(label);
 		
 		labelArt = new JLabel("");
 		labelArt.setBounds(466, 12, 830, 830);
 		labelArt.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		frame.getContentPane().add(labelArt);
+		frmStringArtBy.getContentPane().add(labelArt);
 		
 		JPanel panel = new JPanel();
 		panel.setOpaque(false);
 		panel.setBounds(12, 462, 442, 72);
 		panel.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(51, 51, 51)));
-		frame.getContentPane().add(panel);
+		frmStringArtBy.getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		JLabel label_2 = new JLabel("");
@@ -174,7 +178,11 @@ public class StringGeometricArt {
 		btnSaveFile.setFont(new Font("Dialog", Font.PLAIN, 12));
 		btnSaveFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				save();
+				try {
+					save();
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
 			}
 		});
 		btnSaveFile.setBounds(313, 43, 117, 25);
@@ -190,7 +198,7 @@ public class StringGeometricArt {
 		lblA = new JLabel("   en        A          B           C          D       rotate         repeat       color");
 		lblA.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblA.setBounds(12, 547, 431, 15);
-		frame.getContentPane().add(lblA);
+		frmStringArtBy.getContentPane().add(lblA);
 		
 		panelString = new JPanel[numPanels];
 		en = new JCheckBox[numPanels];
@@ -208,7 +216,7 @@ public class StringGeometricArt {
 			panelString[i].setOpaque(false);
 			panelString[i].setBounds(12, startY+i*45, 442, 43);
 			panelString[i].setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(51, 51, 51)));
-			frame.getContentPane().add(panelString[i]);
+			frmStringArtBy.getContentPane().add(panelString[i]);
 			panelString[i].setLayout(null);
 			
 			en[i] = new JCheckBox("");
@@ -298,8 +306,33 @@ public class StringGeometricArt {
 		}
 	}
 	
-	private void save() {
-		System.out.println(Arrays.deepToString(art.getSet()));
+	private void save() throws FileNotFoundException {
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setDialogTitle("Specify a file to save");
+		int userSelection = fileChooser.showSaveDialog(frmStringArtBy);
+
+		if (userSelection == JFileChooser.APPROVE_OPTION) {
+			File fileToSave = fileChooser.getSelectedFile();
+			PrintWriter out = new PrintWriter(fileToSave);
+
+			int[][] set = art.getSet();
+			for (int s=0; s<set.length; s++) {
+				if (set[s] != null) {
+					out.println();
+					out.println("Set n:" + (s+1) + " Color Red:" + color[s].getBackground().getRed() + " Green:" + color[s].getBackground().getGreen() + " Blue:" + color[s].getBackground().getBlue());
+					out.print("--> ");
+					for (int n=0; n<set[s].length; n++) {
+						if (n%20 == 0 && n!=0) {
+							out.println();
+							out.print("--> ");
+						}
+						out.print(set[s][n] + ", ");
+					}
+					out.println();
+				}
+			}
+			out.close();
+		}
 	}
 	
 	private void changeStringColor(MouseEvent e) {
