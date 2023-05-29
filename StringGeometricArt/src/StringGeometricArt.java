@@ -83,6 +83,48 @@ public class StringGeometricArt {
 		art = new Art(labelArt, Color.BLACK, Color.YELLOW, 180);
 		labelArt.setIcon(new ImageIcon(art.drawNails()));
 		
+		JLabel lblA_1 = new JLabel("A");
+		lblA_1.setFont(new Font("Dialog", Font.PLAIN, 12));
+		lblA_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblA_1.setBounds(65, 546, 19, 15);
+		frmStringArtBy.getContentPane().add(lblA_1);
+		
+		JLabel lblA_1_1 = new JLabel("B");
+		lblA_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblA_1_1.setFont(new Font("Dialog", Font.PLAIN, 12));
+		lblA_1_1.setBounds(113, 546, 19, 15);
+		frmStringArtBy.getContentPane().add(lblA_1_1);
+		
+		JLabel lblA_1_2 = new JLabel("C");
+		lblA_1_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblA_1_2.setFont(new Font("Dialog", Font.PLAIN, 12));
+		lblA_1_2.setBounds(164, 546, 19, 15);
+		frmStringArtBy.getContentPane().add(lblA_1_2);
+		
+		JLabel lblA_1_3 = new JLabel("D");
+		lblA_1_3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblA_1_3.setFont(new Font("Dialog", Font.PLAIN, 12));
+		lblA_1_3.setBounds(213, 546, 19, 15);
+		frmStringArtBy.getContentPane().add(lblA_1_3);
+		
+		JLabel lblA_1_4 = new JLabel("rotate");
+		lblA_1_4.setHorizontalAlignment(SwingConstants.CENTER);
+		lblA_1_4.setFont(new Font("Dialog", Font.PLAIN, 12));
+		lblA_1_4.setBounds(249, 546, 51, 15);
+		frmStringArtBy.getContentPane().add(lblA_1_4);
+		
+		JLabel lblA_1_4_1 = new JLabel("repeat");
+		lblA_1_4_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblA_1_4_1.setFont(new Font("Dialog", Font.PLAIN, 12));
+		lblA_1_4_1.setBounds(327, 546, 51, 15);
+		frmStringArtBy.getContentPane().add(lblA_1_4_1);
+		
+		JLabel lblA_1_4_2 = new JLabel("color");
+		lblA_1_4_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblA_1_4_2.setFont(new Font("Dialog", Font.PLAIN, 12));
+		lblA_1_4_2.setBounds(396, 546, 51, 15);
+		frmStringArtBy.getContentPane().add(lblA_1_4_2);
+		
 		sliderTickness.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) {
 				updateTickness();
@@ -195,9 +237,9 @@ public class StringGeometricArt {
 		comboBoxShape.addItem("Circle");
 		comboBoxShape.addItem("Square");
 		
-		lblA = new JLabel("   en        A          B           C          D       rotate         repeat       color");
+		lblA = new JLabel("   en");
 		lblA.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lblA.setBounds(12, 547, 431, 15);
+		lblA.setBounds(12, 546, 41, 15);
 		frmStringArtBy.getContentPane().add(lblA);
 		
 		panelString = new JPanel[numPanels];
@@ -319,7 +361,9 @@ public class StringGeometricArt {
 			for (int s=0; s<set.length; s++) {
 				if (set[s] != null) {
 					out.println();
-					out.println("Set n:" + (s+1) + " Color Red:" + color[s].getBackground().getRed() + " Green:" + color[s].getBackground().getGreen() + " Blue:" + color[s].getBackground().getBlue());
+					out.println("Set n:" + (s+1) + " Color Red:" + color[s].getBackground().getRed() 
+								+ " Green:" + color[s].getBackground().getGreen() 
+								+ " Blue:" + color[s].getBackground().getBlue());
 					out.print("--> ");
 					for (int n=0; n<set[s].length; n++) {
 						if (n%20 == 0 && n!=0) {
