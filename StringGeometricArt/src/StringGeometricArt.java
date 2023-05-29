@@ -83,6 +83,31 @@ public class StringGeometricArt {
 		art = new Art(labelArt, Color.BLACK, Color.YELLOW, 180);
 		labelArt.setIcon(new ImageIcon(art.drawNails()));
 		
+		
+		
+		sliderTickness.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) {
+				updateTickness();
+			}
+		});	
+		
+		comboBoxShape.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				changeShape();
+			}
+		});
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frmStringArtBy = new JFrame();
+		frmStringArtBy.setTitle("String Art by Deltamike");
+		frmStringArtBy.setResizable(false);
+		frmStringArtBy.setBounds(100, 100, 1310, 890);
+		frmStringArtBy.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		JLabel lblA_1 = new JLabel("A");
 		lblA_1.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblA_1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -124,29 +149,6 @@ public class StringGeometricArt {
 		lblA_1_4_2.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblA_1_4_2.setBounds(396, 546, 51, 15);
 		frmStringArtBy.getContentPane().add(lblA_1_4_2);
-		
-		sliderTickness.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent arg0) {
-				updateTickness();
-			}
-		});	
-		
-		comboBoxShape.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				changeShape();
-			}
-		});
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frmStringArtBy = new JFrame();
-		frmStringArtBy.setTitle("String Art by Deltamike");
-		frmStringArtBy.setResizable(false);
-		frmStringArtBy.setBounds(100, 100, 1310, 890);
-		frmStringArtBy.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		label = new JLabel("");
 		label.setBounds(12, 12, 442, 438);
